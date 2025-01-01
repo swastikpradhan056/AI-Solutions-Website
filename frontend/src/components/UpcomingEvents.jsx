@@ -8,10 +8,17 @@ const UpcomingEvents = ({ limit, pastLimit }) => {
   const [error, setError] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
+  const imageURL =
+    import.meta.env.MODE === "development" ? "http://localhost:3000" : "";
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/events");
+        const response = await axios.get(`${API_URL}/events`);
         console.log("API Response:", response.data); // Log the response data
         setEvents(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
@@ -95,7 +102,7 @@ const UpcomingEvents = ({ limit, pastLimit }) => {
                 onClick={() => setSelectedEvent(event)}
               >
                 <img
-                  src={`http://localhost:3000${event.image}`}
+                  src={`${imageURL}${event.image}`}
                   alt={event.title}
                   className="w-full h-56 object-cover"
                 />
@@ -171,7 +178,7 @@ const UpcomingEvents = ({ limit, pastLimit }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={`http://localhost:3000${selectedEvent.image}`}
+              src={`${imageURL}${selectedEvent.image}`}
               alt={selectedEvent.title}
               className="w-full h-72 sm:h-96 object-cover rounded-t-lg"
             />

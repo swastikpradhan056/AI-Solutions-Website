@@ -9,12 +9,17 @@ const SolutionDetails = () => {
   const [error, setError] = useState(null);
   const { id } = useParams();
 
+  const imageURL =
+    import.meta.env.MODE === "development" ? "http://localhost:3000" : "";
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   useEffect(() => {
     const fetchSolution = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/software-solutions/${id}`
-        );
+        const response = await axios.get(`${API_URL}/software-solutions/${id}`);
         setSolution(response.data);
         setLoading(false);
       } catch (err) {
@@ -71,7 +76,7 @@ const SolutionDetails = () => {
           </div>
           <div className="lg:w-1/2 mt-10 lg:mt-0 flex justify-center">
             <img
-              src={`http://localhost:3000${solution.image}`}
+              src={`${imageURL}${solution.image}`}
               alt={solution.title}
               className="w-full h-auto max-w-md rounded-2xl shadow-xl transform hover:scale-105 transition-transform"
             />

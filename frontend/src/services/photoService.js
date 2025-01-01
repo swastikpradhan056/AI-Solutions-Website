@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/photos";
+// "http://localhost:3000/api/photos";
+
+const API_URL =
+  import.meta.env.MODE === "development" ? "http://localhost:3000/api" : "/api";
 
 // Configure axios to include cookies in every request
 axios.defaults.withCredentials = true;
@@ -8,7 +11,7 @@ axios.defaults.withCredentials = true;
 // Fetch photos (uses token from cookie)
 export const fetchPhotos = async () => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(`${API_URL}/photos`);
     return response.data;
   } catch (error) {
     console.error(

@@ -8,6 +8,13 @@ const PhotoGallery = () => {
   const [error, setError] = useState(null);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
+  const imageURL =
+    import.meta.env.MODE === "development" ? "http://localhost:3000" : "";
+  // const API_URL =
+  //   import.meta.env.MODE === "development"
+  //     ? "http://localhost:3000/api"
+  //     : "/api";
+
   useEffect(() => {
     const loadPhotos = async () => {
       try {
@@ -97,7 +104,7 @@ const PhotoGallery = () => {
               onClick={() => setSelectedPhoto(photo)}
             >
               <img
-                src={`http://localhost:3000${photo.imageUrl}`}
+                src={`${imageURL}${photo.imageUrl}`}
                 alt={photo.title}
                 className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
               />
@@ -128,7 +135,7 @@ const PhotoGallery = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={`http://localhost:3000${selectedPhoto.imageUrl}`}
+              src={`${imageURL}${selectedPhoto.imageUrl}`}
               alt={selectedPhoto.title}
               className="w-full h-auto"
             />

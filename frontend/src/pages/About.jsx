@@ -7,6 +7,11 @@ const About = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   // Function to toggle "Learn More" content
   const toggleContent = () => {
     setShowMore((prev) => !prev);
@@ -16,7 +21,7 @@ const About = () => {
   useEffect(() => {
     const fetchAboutData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/about"); // Ensure the endpoint matches your backend
+        const response = await fetch(`${API_URL}/about`); // Ensure the endpoint matches your backend
         if (!response.ok) {
           throw new Error("Failed to fetch about data.");
         }

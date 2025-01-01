@@ -12,13 +12,18 @@ const Solutions = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const imageURL =
+    import.meta.env.MODE === "development" ? "http://localhost:3000" : "";
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   // Fetch solutions from backend on component mount
   useEffect(() => {
     const fetchSolutions = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/software-solutions"
-        );
+        const response = await axios.get(`${API_URL}/software-solutions`);
         const data = Array.isArray(response.data)
           ? response.data
           : response.data.solutions || [];
@@ -124,7 +129,7 @@ const Solutions = () => {
                 onClick={() => handleDesc(solution._id)}
               >
                 <img
-                  src={`http://localhost:3000${solution.image}`}
+                  src={`${imageURL}${solution.image}`}
                   alt={solution.title}
                   className="w-full h-48 object-cover rounded-t-lg mb-4"
                 />

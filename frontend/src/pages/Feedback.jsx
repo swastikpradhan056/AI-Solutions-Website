@@ -15,11 +15,16 @@ const Feedback = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   // Fetch feedback on component mount
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/feedback");
+        const response = await axios.get(`${API_URL}/feedback`);
         setFeedbackList(response.data);
         setLoading(false);
       } catch (err) {
@@ -45,10 +50,7 @@ const Feedback = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/feedback",
-        formData
-      );
+      const response = await axios.post(`${API_URL}/feedback`, formData);
       setFeedbackList((prev) => [...prev, response.data]);
       setFormData({ name: "", comment: "", rating: 0 });
       setSuccess("Feedback submitted successfully!");

@@ -22,7 +22,7 @@ const addFeedback = async (req, res) => {
     // Email notification details
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "swastikpradhan056@gmail.com", // Replace with the admin's email
+      to: process.env.COMPANY_EMAIL, // Replace with the admin's email
       subject: "New Feedback Submitted",
       text: `A new feedback has been submitted:
       

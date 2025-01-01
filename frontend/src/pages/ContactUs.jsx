@@ -4,6 +4,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "motion/react";
 
+const API_URL =
+  import.meta.env.MODE === "development" ? "http://localhost:3000/api" : "/api";
+
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -25,7 +28,7 @@ const ContactUs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/inquiries", formData);
+      await axios.post(`${API_URL}/inquiries`, formData);
       setSuccess("Your inquiry has been submitted successfully!");
       setFormData({
         name: "",

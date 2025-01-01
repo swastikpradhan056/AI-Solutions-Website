@@ -11,6 +11,8 @@ const Home = () => {
   const [loadingFeedback, setLoadingFeedback] = useState(true);
   const navigate = useNavigate();
 
+  const imageURL =
+    import.meta.env.MODE === "development" ? "http://localhost:3000" : "";
   const API_URL =
     import.meta.env.MODE === "development"
       ? "http://localhost:3000/api"
@@ -38,7 +40,7 @@ const Home = () => {
     // Fetch feedback
     const fetchFeedback = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/feedback");
+        const response = await axios.get(`${API_URL}/feedback`);
         console.log(`API response:`, response.data);
 
         setFeedback(Array.isArray(response.data) ? response.data : []);
@@ -126,7 +128,7 @@ const Home = () => {
                   onClick={() => handleDesc(solution._id || solution.id)}
                 >
                   <img
-                    src={`http://localhost:3000${solution.image}`}
+                    src={`${imageURL}${solution.image}`}
                     alt={solution.title}
                     className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
                   />

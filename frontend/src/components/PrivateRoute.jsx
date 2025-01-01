@@ -5,15 +5,17 @@ import axios from "axios";
 const PrivateRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // Initially null to handle loading state
 
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/auth/check",
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get(`${API_URL}/auth/check`, {
+          withCredentials: true,
+        });
         if (response.status === 200) {
           setIsAuthenticated(true);
         } else {

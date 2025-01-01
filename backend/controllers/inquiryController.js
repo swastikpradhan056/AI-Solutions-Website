@@ -35,7 +35,7 @@ const addInquiry = async (req, res) => {
     // Email notification details
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "swastikpradhan056@gmail.com", // Replace with the admin's email
+      to: process.env.COMPANY_EMAIL, // Replace with the admin's email
       subject: "New Inquiry Submitted",
       text: `A new inquiry has been submitted:
       
