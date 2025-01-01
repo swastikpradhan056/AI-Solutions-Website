@@ -12,6 +12,13 @@ const SolutionsAdmin = () => {
   const handleLogout = useLogout();
   const navigate = useNavigate();
 
+  const imageURL =
+    import.meta.env.MODE === "development" ? "http://localhost:3000" : "";
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -23,12 +30,9 @@ const SolutionsAdmin = () => {
 
   const fetchSolutions = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/software-solutions",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${API_URL}/software-solutions`, {
+        withCredentials: true,
+      });
       setSolutions(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching solutions:", error);
@@ -70,7 +74,7 @@ const SolutionsAdmin = () => {
       if (editingId) {
         // Edit logic
         await axios.put(
-          `http://localhost:3000/api/software-solutions/${editingId}`,
+          `${API_URL}/software-solutions/${editingId}`,
           formDataToSend,
           {
             withCredentials: true,
@@ -79,13 +83,9 @@ const SolutionsAdmin = () => {
         setEditingId(null); // Clear editing state
       } else {
         // Add logic
-        await axios.post(
-          "http://localhost:3000/api/software-solutions",
-          formDataToSend,
-          {
-            withCredentials: true,
-          }
-        );
+        await axios.post(`${API_URL}/software-solutions`, formDataToSend, {
+          withCredentials: true,
+        });
       }
 
       // Reset form data, including benefits and tags
@@ -117,7 +117,7 @@ const SolutionsAdmin = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/software-solutions/${id}`, {
+      await axios.delete(`${API_URL}/software-solutions/${id}`, {
         withCredentials: true,
       });
       fetchSolutions();
@@ -172,7 +172,7 @@ const SolutionsAdmin = () => {
                       <td className="p-4">
                         {solution.image ? (
                           <img
-                            src={`http://localhost:3000${solution.image}`}
+                            src={`${imageURL}${solution.image}`}
                             alt={solution.title}
                             className="w-16 h-16 object-cover rounded-md border"
                           />

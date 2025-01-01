@@ -13,9 +13,14 @@ const Inquiries = () => {
   const handleLogout = useLogout();
   const navigate = useNavigate();
 
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   const fetchInquiries = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/inquiries", {
+      const response = await axios.get(`${API_URL}/inquiries`, {
         withCredentials: true, // Ensures cookies are sent with the request
       });
       setInquiries(response.data);
@@ -32,7 +37,7 @@ const Inquiries = () => {
 
   const deleteInquiry = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/inquiries/${id}`, {
+      await axios.delete(`${API_URL}/inquiries/${id}`, {
         withCredentials: true, // Ensures cookies are sent with the request
       });
       setInquiries(inquiries.filter((inquiry) => inquiry._id !== id));

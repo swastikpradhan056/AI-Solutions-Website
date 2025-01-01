@@ -13,10 +13,15 @@ const AboutAdmin = () => {
   const handleLogout = useLogout();
   const navigate = useNavigate();
 
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   // Fetch about data from the server
   const fetchAbout = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/about", {
+      const response = await axios.get(`${API_URL}/about`, {
         withCredentials: true,
       });
       setAbout(response.data || { title: "", content: "" });
@@ -32,7 +37,7 @@ const AboutAdmin = () => {
   // Save updated about data to the server
   const handleSave = async () => {
     try {
-      await axios.put("http://localhost:3000/api/about", about, {
+      await axios.put(`${API_URL}/about`, about, {
         withCredentials: true,
       });
       toast.success("About Section Updated!", { autoClose: 2000 });

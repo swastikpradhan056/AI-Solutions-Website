@@ -10,13 +10,18 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null); // Clear previous errors
     try {
       // Send POST request with credentials
       const response = await axios.post(
-        "http://localhost:3000/api/admin/login", // Ensure this is the correct endpoint
+        `${API_URL}/admin/login`, // Ensure this is the correct endpoint
         { email, password },
         { withCredentials: true } // Include cookies in the request
       );

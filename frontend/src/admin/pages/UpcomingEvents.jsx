@@ -21,10 +21,17 @@ const UpcomingEventsAdmin = () => {
   const handleLogout = useLogout();
   const navigate = useNavigate();
 
+  const imageURL =
+    import.meta.env.MODE === "development" ? "http://localhost:3000" : "";
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   // Fetch events from the API
   const fetchEvents = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/events");
+      const response = await axios.get(`${API_URL}/events`);
       if (Array.isArray(response.data)) {
         setEvents(response.data);
       } else {
@@ -75,18 +82,14 @@ const UpcomingEventsAdmin = () => {
 
     try {
       if (currentEvent) {
-        await axios.put(
-          `http://localhost:3000/api/events/${currentEvent._id}`,
-          data,
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        await axios.put(`${API_URL}/events/${currentEvent._id}`, data, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
       } else {
-        await axios.post("http://localhost:3000/api/events", data, {
+        await axios.post(`${API_URL}/events`, data, {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -105,7 +108,7 @@ const UpcomingEventsAdmin = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/events/${id}`);
+      await axios.delete(`${API_URL}/events/${id}`);
       fetchEvents();
     } catch (error) {
       console.error("Error deleting event:", error);
@@ -222,7 +225,7 @@ const UpcomingEventsAdmin = () => {
                 >
                   {event.image && (
                     <img
-                      src={`http://localhost:3000${event.image}`}
+                      src={`${imageURL}${event.image}`}
                       alt={event.title}
                       className="w-full h-56 object-cover rounded-lg mb-4"
                     />
@@ -304,6 +307,7 @@ const UpcomingEventsAdmin = () => {
                   <input
                     type="file"
                     name="image"
+                    value={formData.image}
                     onChange={handleChange}
                     className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />

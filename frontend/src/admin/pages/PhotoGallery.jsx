@@ -19,6 +19,13 @@ const PhotoGalleryAdmin = () => {
   const handleLogout = useLogout();
   const navigate = useNavigate();
 
+  const imageURL =
+    import.meta.env.MODE === "development" ? "http://localhost:3000" : "";
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -30,7 +37,7 @@ const PhotoGalleryAdmin = () => {
 
   const fetchPhotos = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/photos", {
+      const response = await axios.get(`${API_URL}/photos`, {
         withCredentials: true,
       });
       setPhotos(Array.isArray(response.data) ? response.data : []);
@@ -55,16 +62,12 @@ const PhotoGalleryAdmin = () => {
       }
 
       if (editingId) {
-        await axios.put(
-          `http://localhost:3000/api/photos/${editingId}`,
-          formDataToSend,
-          {
-            withCredentials: true,
-          }
-        );
+        await axios.put(`${API_URL}/photos/${editingId}`, formDataToSend, {
+          withCredentials: true,
+        });
         setEditingId(null);
       } else {
-        await axios.post("http://localhost:3000/api/photos", formDataToSend, {
+        await axios.post(`${API_URL}/photos`, formDataToSend, {
           withCredentials: true,
         });
       }
@@ -99,7 +102,7 @@ const PhotoGalleryAdmin = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/photos/${id}`, {
+      await axios.delete(`${API_URL}/photos/${id}`, {
         withCredentials: true,
       });
       fetchPhotos();
@@ -156,7 +159,7 @@ const PhotoGalleryAdmin = () => {
                         <td className="border p-4">
                           {photo.imageUrl ? (
                             <img
-                              src={`http://localhost:3000${photo.imageUrl}`}
+                              src={`${imageURL}${photo.imageUrl}`}
                               alt={photo.title}
                               className="w-16 h-16 object-cover rounded-lg shadow-md"
                             />

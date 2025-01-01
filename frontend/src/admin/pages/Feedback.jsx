@@ -13,9 +13,14 @@ const FeedbackAdmin = () => {
   const handleLogout = useLogout();
   const navigate = useNavigate();
 
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   const fetchFeedbacks = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/feedback", {
+      const response = await axios.get(`${API_URL}/feedback`, {
         withCredentials: true, // Ensures cookies are sent with the request
       });
       setFeedbacks(response.data);
@@ -32,7 +37,7 @@ const FeedbackAdmin = () => {
 
   const deleteFeedback = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/feedback/${id}`, {
+      await axios.delete(`${API_URL}/feedback/${id}`, {
         withCredentials: true, // Ensures cookies are sent with the request
       });
       setFeedbacks(feedbacks.filter((feedback) => feedback._id !== id));

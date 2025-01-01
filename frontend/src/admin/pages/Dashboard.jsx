@@ -18,14 +18,16 @@ const Dashboard = () => {
   const navigate = useNavigate(); // For navigation in case of error
   const handleLogout = useLogout();
 
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   const fetchStatistics = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/admin/statistics",
-        {
-          withCredentials: true, // Ensures cookies are sent with the request
-        }
-      );
+      const response = await axios.get(`${API_URL}/admin/statistics`, {
+        withCredentials: true, // Ensures cookies are sent with the request
+      });
 
       if (response.data) {
         // Fallback to default 0 if any value is missing

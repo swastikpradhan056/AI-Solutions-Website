@@ -19,10 +19,15 @@ const Admins = () => {
   const handleLogout = useLogout();
   const navigate = useNavigate();
 
+  const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:3000/api"
+      : "/api";
+
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/admin");
+        const response = await axios.get(`${API_URL}/admin`);
         console.log("API response:", response.data); // Log the response for debugging
         const data = Array.isArray(response.data)
           ? response.data
@@ -44,7 +49,7 @@ const Admins = () => {
   const handleAddAdmin = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/admin", newAdmin, {
+      await axios.post(`${API_URL}/admin`, newAdmin, {
         withCredentials: true,
       });
       setNewAdmin({ name: "", email: "", password: "" });
@@ -58,7 +63,7 @@ const Admins = () => {
 
   const handleDeleteAdmin = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/admin/${id}`, {
+      await axios.delete(`${API_URL}/admin/${id}`, {
         withCredentials: true, // Ensures cookies are sent with the request
       });
       alert("Admin deleted successfully");
@@ -72,7 +77,7 @@ const Admins = () => {
   const handleChangePassword = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("http://localhost:3000/api/admin/password", passwords);
+      await axios.put(`${API_URL}/admin/password`, passwords);
       setPasswords({ currentPassword: "", newPassword: "" });
       alert("Password changed successfully");
     } catch (error) {
