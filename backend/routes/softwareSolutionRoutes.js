@@ -18,7 +18,7 @@ router.get("/", getSoftwareSolutions);
 router.get("/:id", getSoftwareSolutionById);
 
 // Admin route to add a new software solution
-router.post("/", authMiddleware, upload.single("image"), addSoftwareSolution);
+router.post("/", upload.single("image"), addSoftwareSolution);
 
 // Admin route to edit a software solution
 router.put(
