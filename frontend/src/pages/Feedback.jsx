@@ -163,14 +163,14 @@ const Feedback = () => {
           </div>
 
           {/* Feedback List */}
-          <div className="flex flex-row items-center mt-12 flex-1 justify-center gap-4">
+          <div className="flex flex-col md:flex-row items-center mt-12 flex-wrap justify-center gap-4">
             {loading ? (
               <p className="text-center text-gray-400">Loading feedback...</p>
             ) : (
               feedbackList.map((feedback) => (
                 <div
                   key={feedback.id}
-                  className="bg-[#003060] rounded-lg shadow-lg p-6 transform transition hover:shadow-xl w-full"
+                  className="bg-[#003060] rounded-lg shadow-lg p-6 transform transition hover:shadow-xl w-full sm:w-1/2 lg:w-1/3 xl:w-1/4"
                 >
                   <h3 className="text-xl font-semibold text-white">
                     {feedback.name}
