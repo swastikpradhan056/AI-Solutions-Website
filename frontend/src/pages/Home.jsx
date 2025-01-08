@@ -148,46 +148,45 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section id="feedback" className="py-16 bg-[#055C9D]">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-12 text-white">
-            What Our Customers Say
-          </h2>
-          {loadingFeedback ? (
-            <p className="text-center text-gray-400">Loading feedback...</p>
-          ) : (
-            <motion.div
-              whileInView={{ opacity: 1 }}
-              initial={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-              className="flex flex-row items-center mt-12 flex-1 justify-center gap-4"
-            >
-              {feedback.slice(0, 3).map((item, index) => (
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{
-                    duration: 0.3,
-                    delay: index * 0.5,
-                    easeInOut: "linear",
-                  }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  key={item.id || item._id}
-                  className="bg-[#003060] rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 w-full"
-                >
-                  <h3 className="text-lg font-semibold text-teal-400">
-                    {item.name}
-                  </h3>
-                  <p className="text-yellow-500 text-sm mb-2">
-                    {"★".repeat(item.rating) + "☆".repeat(5 - item.rating)}
-                  </p>
-                  <p className="text-gray-300">{item.comment}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
-        </div>
-      </section>
+     <section id="feedback" className="py-16 bg-[#055C9D]">
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 text-white">
+      What Our Customers Say
+    </h2>
+    {loadingFeedback ? (
+      <p className="text-center text-gray-400">Loading feedback...</p>
+    ) : (
+      <motion.div
+        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+        className="flex flex-col md:flex-row items-center justify-center gap-4 flex-wrap"
+      >
+        {feedback.slice(0, 3).map((item, index) => (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.3,
+              delay: index * 0.5,
+              easeInOut: "linear",
+            }}
+            viewport={{ once: true, amount: 0.3 }}
+            key={item.id || item._id}
+            className="bg-[#003060] rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 w-full sm:w-1/2 lg:w-1/3"
+          >
+            <h3 className="text-lg font-semibold text-teal-400">{item.name}</h3>
+            <p className="text-yellow-500 text-sm mb-2">
+              {"★".repeat(item.rating) + "☆".repeat(5 - item.rating)}
+            </p>
+            <p className="text-gray-300">{item.comment}</p>
+          </motion.div>
+        ))}
+      </motion.div>
+    )}
+  </div>
+</section>
+
 
       {/* Upcoming Events Section */}
       <UpcomingEvents limit={4} pastLimit={4} />
